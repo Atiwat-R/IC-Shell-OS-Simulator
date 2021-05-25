@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "script_mode.c"
+#include "external_com.c"
 
 // Prints out given string
 void echo(char word[100]) {
@@ -25,7 +26,7 @@ void processInput(char input[100]) {
     // blank or header (starts with #)
     if (isspace(all_words[0]) != 0 || all_words[0] == '#') 
     {
-        return;
+        return; 
     } 
 
     // echo
@@ -46,9 +47,24 @@ void processInput(char input[100]) {
     // exit with exitcode
     else if (strcmp(all_words, "exit\n") == 0 || strcmp(all_words, "exit") == 0) 
     {
-        int exitcode = atoi(strtok(NULL, " ")); // Turn second string to int
+        // int exitcode = atoi(strtok(NULL, " ")); // Turn second string to int
+        // printf("\nexited\n");
+        // exit(exitcode); // Exit program with given exit code. Use bash command echo $? immediately after termination to see the program's exit code.
+
+        all_words = strtok(NULL, " ");
         printf("\nexited\n");
-        exit(exitcode); // Exit program with given exit code. Use bash command echo $? immediately after termination to see the program's exit code.
+        if (all_words == NULL) exit(0);
+        else exit(atoi(all_words));
+    }        
+
+
+
+    // External commands
+    else if (is_external_com(all_words))
+    {
+        char comm[100];
+        strcpy(comm, lastCommand); // Pass in lastCommand, which is still complete, as input is compromised after split
+        execute_external_com(comm);
     }
     
     // Bad Command
@@ -67,7 +83,6 @@ int start() {
         fgets(input, sizeof(input), stdin); // Takes input
         // if (strcmp(&input, "!!\n") != 0) strcpy(lastCommand, &input); // Updates lastCommand
         processInput(&input);
-
     }
     return 0;
 }
@@ -83,7 +98,7 @@ int main(int argc, char *argv[]) {
         start(); // Go to interactive mode
     }
     else {
-        process_script_mode(argv); // Read from script and process commands
+        process_script_mode(argv); // Script mode: read from script and process commands
         start(); // Go to interactive mode afterwards
     }
 
