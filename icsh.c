@@ -53,8 +53,8 @@ void processInput(char input[100]) {
 
         all_words = strtok(NULL, " ");
         printf("\nexited\n");
-        if (all_words == NULL) exit(0);
-        else exit(atoi(all_words));
+        if (all_words == NULL) { exit(0); }
+        else { exit(atoi(all_words)); }
     }        
 
 
