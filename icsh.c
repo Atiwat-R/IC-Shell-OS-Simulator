@@ -2,6 +2,7 @@
 #include <string.h>
 #include "script_mode.c"
 #include "external_com.c"
+#include "signal_handler.c"
 
 // Prints out given string
 void echo(char word[100]) {
@@ -93,6 +94,8 @@ int start() {
 
 
 int main(int argc, char *argv[]) {
+
+    signal(SIGINT, sig_INT_Handler);
 
     if (argc != 2) { // See number of files: { $ ./icsh note.txt } will make argc = 2
         start(); // Go to interactive mode
