@@ -62,7 +62,8 @@ void execute_external_com(char input[100]) {
 
 
 
-
+    // char* arr[] = {"ls", "-l", "-a", "-i", NULL};
+    // execv("/bin/ls", arr);
 
 
 

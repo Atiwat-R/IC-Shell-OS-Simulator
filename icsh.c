@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "script_mode.c"
 #include "external_com.c"
@@ -14,15 +15,32 @@ void echo(char word[100]) {
     }
 }
 
+// Check if it contains & at the back; indicates a background job
+// int is_background_job(char input[100]) {
+//     char *all_word = strtok(input, " "); // Split String input by spaces
+
+//     char latest[100];
+//     while (all_word != NULL) {
+//         strcpy(latest, all_word);
+//         // printf("%s\n", latest);
+//         all_word = strtok(NULL, " ");
+//     }
+//     return strcmp(latest, "&");
+// }
+
 
 char lastCommand[100] = ""; // Contains latest commands, bar from keeping !! command.
 
 // Take in a command and execute it. Also update lastCommand.
 void processInput(char input[100]) {
     if (strncmp(input, "!!", 2) != 0) strcpy(lastCommand, input); // Updates lastCommand (strcmp(input, "!!\n")
-    char *all_words = strtok(input, " "); // Split String input by spaces
 
-    // printf("\n--%s--\n", all_words);
+    char input2[100]; // For secondary use
+    strcpy(input2, input); 
+
+    char *all_words = strtok(input, " "); // Split String input by spaces. Input is now altered.
+
+    // printf("\n--%c--\n", input2[strlen(input2)-2]);
 
     // blank or header (starts with #)
     if (isspace(all_words[0]) != 0 || all_words[0] == '#') 
@@ -30,8 +48,14 @@ void processInput(char input[100]) {
         return; 
     } 
 
+    // Background job
+    if (input2[strlen(input2)-2] == '&')
+    {
+        puts("reached!\n");
+    }
+
     // echo
-    else if (strcmp(all_words, "echo") == 0) 
+    if (strcmp(all_words, "echo") == 0) 
     {
         echo(all_words);
     } 
@@ -57,8 +81,6 @@ void processInput(char input[100]) {
         if (all_words == NULL) { exit(0); }
         else { exit(atoi(all_words)); }
     }        
-
-
 
     // External commands
     else if (is_external_com(all_words))
@@ -91,11 +113,9 @@ int start() {
 
 
 
-
-
 int main(int argc, char *argv[]) {
 
-    signal(SIGINT, sig_INT_Handler);
+    initiate_sigaction();
 
     if (argc != 2) { // See number of files: { $ ./icsh note.txt } will make argc = 2
         start(); // Go to interactive mode
