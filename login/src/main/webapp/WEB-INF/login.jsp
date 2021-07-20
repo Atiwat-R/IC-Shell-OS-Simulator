@@ -15,10 +15,10 @@
             <p>${error}</p>
             <form action="/login" method="post">
                 Username:<br/>
-                <input type="text" name="username"/>
+                <input type="text" class="form-control" name="username" placeholder="Username" aria-label="Username" aria-describedby="username"/>
                 <br/>
                 Password:<br/>
-                <input type="password" name="password">
+                <input type="password" class="form-control" name="password"  placeholder="Password" aria-label="Password" aria-describedby="password">
                 <br><br>
                 <button class="btn btn-primary" type="submit" value="">Submit</button>
             </form>

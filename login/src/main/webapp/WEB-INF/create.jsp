@@ -24,7 +24,6 @@
         </div>
     </nav>
 
-
     <c:if test="${not empty message}">
         <c:choose>
             <c:when test="${empty var1}">
@@ -39,17 +38,53 @@
             </c:otherwise>
         </c:choose>
 
-
-
     </c:if>
 
-    ${user.username}
+
+    <div class="row justify-content-md-center">
+        <div class="col-sm-12 col-md-3">
+
+            <h3>Create New User</h3>
+            <p>${error}</p>
+            <form action="/user/create" method="post" autocomplete="off">
+                <%--Username:--%>
+                <br/>
+                <input type="text" class="form-control" name="username" placeholder="Username" aria-label="Username"
+                       aria-describedby="username" value="${username}"/>
+                <br/>
+                <%--Display Name:--%>
+                <br/>
+                <input type="text" class="form-control" name="displayName" placeholder="Display Name"
+                       aria-label="displayName" aria-describedby="displayName" value="${displayName}"/>
+                <br/>
+                <%--Password:--%>
+                <br/>
+                <input type="password" class="form-control" name="password" placeholder="Password" aria-label="Password"
+                       aria-describedby="password" value="${password}">
+                <br>
+                <%--Confirm Password:--%>
+                <br/>
+                <input type="password" class="form-control" name="cpassword" placeholder="Confirm Password"
+                       aria-label="Password" aria-describedby="password" value="${cpassword}">
+                <br><br>
+                <button class="btn btn-success" type="submit" value="">Create User</button>
+            </form>
+
+        </div>
+    </div>
+
 
 </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>
