@@ -4,6 +4,7 @@
 #include "script_mode.c"
 #include "external_com.c"
 #include "signal_handler.c"
+#include "background_job.c"
 
 // Prints out given string
 void echo(char word[100]) {
@@ -15,7 +16,8 @@ void echo(char word[100]) {
     }
 }
 
-// Check if it contains & at the back; indicates a background job
+// --- UNNECESSARY ---
+// // Check if it contains & at the back; indicates a background job
 // int is_background_job(char input[100]) {
 //     char *all_word = strtok(input, " "); // Split String input by spaces
 
@@ -51,11 +53,34 @@ void processInput(char input[100]) {
     // Background job
     if (input2[strlen(input2)-2] == '&')
     {
-        puts("reached!\n");
+        input2[strlen(input2)-1] = '\0'; // Eliminate \n
+        input2[strlen(input2)-2] = '\0'; // Eliminate &
+
+        // char comm[100];
+        // strcpy(comm, input2);
+
+        // puts("reached!\n");
+        //puts(input2);
+        // puts("reached!\n");
+
+        pid_t pid;
+        pid = fork(); 
+        
+        if (pid == 0) execute_bg(input2);
+
+        //kill(pid, SIGKILL);
+
+        // if (pid) { exit(0); }
+
+
+        // int status;
+        // if ( fork() == 0 )
+        //     execute_external_com(input2);
+        //     return;
     }
 
     // echo
-    if (strcmp(all_words, "echo") == 0) 
+    else if (strcmp(all_words, "echo") == 0) 
     {
         echo(all_words);
     } 

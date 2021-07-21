@@ -3,6 +3,37 @@
 #include <signal.h>
 #define SIGTSTP 18
 
+
+
+
+/* Signal Handler for SIGINT */
+void sig_INT_Handler(int sig_num)
+{
+    /* Reset handler to catch SIGINT next time.
+       Refer http://en.cppreference.com/w/c/program/signal */
+    signal(SIGINT, sig_INT_Handler);
+    printf("\n Foreground process stopped. Press Enter.\n");
+    fflush(stdout);
+    return;
+
+    // pid_t pid;
+    // kill(pid, 9);
+}
+
+
+void sig_TSTP_Handler(int n)
+{
+    signal(SIGTSTP, sig_TSTP_Handler);
+    printf("\n Foreground process paused. \n");
+    pause();
+    fflush(stdout);
+    return;
+}
+
+
+
+
+
 // Initiate signal handlers.
 void initiate_sigaction() {
         // signal(SIGINT, sig_INT_Handler);
@@ -33,29 +64,7 @@ void initiate_sigaction() {
 }
 
 
-/* Signal Handler for SIGINT */
-void sig_INT_Handler(int sig_num)
-{
-    /* Reset handler to catch SIGINT next time.
-       Refer http://en.cppreference.com/w/c/program/signal */
-    signal(SIGINT, sig_INT_Handler);
-    printf("\n Foreground process stopped. Press Enter.\n");
-    fflush(stdout);
-    return;
 
-    // pid_t pid;
-    // kill(pid, 9);
-}
-
-
-void sig_TSTP_Handler(int n)
-{
-    signal(SIGTSTP, sig_TSTP_Handler);
-    printf("\n Foreground process paused. \n");
-    pause();
-    fflush(stdout);
-    return;
-}
 
 
 /* Signal Handler for SIGTSTP */
